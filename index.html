@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stylish: Sprint 2 Demo</title>
+<style>
+:root{--bg:#e9eeed;--card:#fff;--ink:#16302f;--muted:#6b7f7e;--accent:#0f5a57;--on:#fff;--line:#dbe4e3;--chip:#eef3f2;--gold:#c98a12;--bad:#b3261e;--good:#1f7a3f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1615;--card:#14231f;--ink:#e8f1ef;--muted:#9bb0ad;--accent:#4fc1b6;--on:#0a1a18;--line:#243a36;--chip:#1d332f;--gold:#e8b44a;--bad:#ff8a80;--good:#6fd48f}}
+:root[data-theme="dark"]{--bg:#0c1615;--card:#14231f;--ink:#e8f1ef;--muted:#9bb0ad;--accent:#4fc1b6;--on:#0a1a18;--line:#243a36;--chip:#1d332f;--gold:#e8b44a;--bad:#ff8a80;--good:#6fd48f}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:8px}
+.phone{width:min(380px,100%);flex:1;max-height:740px;min-height:0;background:var(--card);border:1px solid var(--line);border-radius:26px;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.top{padding:14px 18px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.logo{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:26px;color:var(--accent);flex:1}
+.top h2{margin:0;font-size:17px;flex:1}
+.back{border:0;background:var(--chip);color:var(--ink);width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer}
+.main{flex:1;overflow-y:auto;min-height:0}
+.search{margin:12px 18px 8px;display:block;width:calc(100% - 36px);padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--chip);color:var(--ink);font-size:15px}
+.chips{display:flex;gap:8px;padding:0 18px 4px;align-items:center;font-size:13px;color:var(--muted)}
+.chip{border:1.5px solid var(--line);background:none;color:var(--ink);border-radius:16px;padding:5px 12px;font-size:13px;cursor:pointer}
+.chip.on{background:var(--accent);color:var(--on);border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:10px 18px 14px}
+.item{cursor:pointer;border:0;background:none;text-align:left;color:inherit;padding:0;font:inherit}
+.tile{aspect-ratio:1/1.1;border-radius:14px;display:flex;align-items:center;justify-content:center}
+.tile svg{width:58%}
+.item b{display:block;font-size:13px;margin-top:6px;font-weight:600}
+.item span{font-size:13px;color:var(--gold);font-weight:700}
+.none{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 10px}
+.hero{margin:14px 18px;border-radius:18px;display:flex;align-items:center;justify-content:center;aspect-ratio:1.2}
+.hero svg{width:44%}
+.info{padding:0 18px 18px}
+.info h1{font-size:21px;margin:0 0 4px}
+.price{font-size:19px;color:var(--gold);font-weight:700}
+.lbl{margin:16px 0 8px;font-size:14px;font-weight:600}
+.sizes{display:flex;gap:8px}
+.sz{width:48px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:none;color:var(--ink);font-size:15px;cursor:pointer}
+.sz.on{background:var(--accent);color:var(--on);border-color:var(--accent)}
+.btn{width:100%;margin-top:18px;padding:15px;border:0;border-radius:14px;background:var(--accent);color:var(--on);font-size:16px;font-weight:700;cursor:pointer}
+.btn:disabled{opacity:.4;cursor:default}
+.hint{font-size:12px;color:var(--muted);margin-top:8px;text-align:center;min-height:16px}
+.row{display:flex;gap:14px;padding:18px;align-items:center;border-bottom:1px solid var(--line)}
+.row .tile{width:84px;aspect-ratio:1;flex:none}
+.row .tile svg{width:60%}
+.row h3{margin:0 0 2px;font-size:15px}
+.row small{color:var(--muted)}
+.qty{display:flex;align-items:center;gap:12px;margin-top:10px}
+.qty button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:none;color:var(--ink);font-size:18px;cursor:pointer}
+.qty output{min-width:18px;text-align:center;font-weight:700;font-size:16px}
+.cp{padding:16px 18px 0}
+.cp div{display:flex;gap:8px}
+.cp input{flex:1;min-width:0;padding:12px;border-radius:12px;border:1.5px solid var(--line);background:var(--chip);color:var(--ink);font-size:15px;text-transform:uppercase}
+.cp button{padding:0 18px;border:0;border-radius:12px;background:var(--accent);color:var(--on);font-weight:700;cursor:pointer}
+.msg{font-size:13px;margin-top:8px;min-height:18px}
+.msg.bad{color:var(--bad)}.msg.good{color:var(--good)}
+.sum{padding:8px 18px 18px}
+.sum div{display:flex;justify-content:space-between;margin-bottom:8px;color:var(--muted)}
+.sum .off{color:var(--good)}
+.sum .tot{color:var(--ink);font-size:20px;font-weight:800;margin-top:12px}
+.bump{animation:b .35s}
+@keyframes b{40%{transform:scale(1.12);color:var(--gold)}}
+@media (prefers-reduced-motion:reduce){.bump{animation:none}}
+.pay{display:flex;gap:12px;align-items:center;width:100%;margin-top:10px;padding:14px;border-radius:14px;border:1.5px solid var(--line);background:none;color:var(--ink);font-size:15px;text-align:left;cursor:pointer}
+.pay.on{border-color:var(--accent);background:var(--chip)}
+.pay i{width:18px;height:18px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.pay.on i{border:5px solid var(--accent)}
+.pay small{display:block;color:var(--muted);font-size:12px}
+.done{text-align:center;padding:40px 24px}
+.done svg{width:72px;color:var(--good)}
+.done h1{margin:14px 0 6px;font-size:22px}
+.done p{margin:4px 0;color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:70px 30px}
+.nav{display:flex;border-top:1px solid var(--line)}
+.nav button{flex:1;padding:12px 0 14px;border:0;background:none;color:var(--muted);font-size:13px;cursor:pointer;position:relative}
+.nav button.on{color:var(--accent);font-weight:700}
+.badge{position:absolute;top:6px;margin-left:6px;background:var(--gold);color:#fff;border-radius:9px;min-width:18px;padding:1px 5px;font-size:11px}
+.toast{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);background:var(--ink);color:var(--card);padding:9px 16px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.reset{border:0;background:none;color:var(--muted);font-size:12px;text-decoration:underline;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="top" id="top"></div>
+  <div class="main" id="main"></div>
+  <div class="nav"><button id="nh" onclick="go('home')">Home</button><button id="nc" onclick="go('cart')">Cart<span class="badge" id="bd" hidden></span></button></div>
+  <div class="toast" id="toast"></div>
+</div>
+<button class="reset" onclick="reset()">Reset demo</button>
+<script>
+var P=[["Linen Shirt",2500,"#2f7f79"],["Cotton Kurta",3200,"#b5546b"],["Embroidered Kurta",5800,"#3d4f8a"],["Denim Jacket",6400,"#4c6c8c"],["Lawn Suit",4300,"#c98a12"],["Printed Dupatta",1800,"#8a4f9e"],["Polo Shirt",2100,"#3f8f5a"],["Chiffon Dupatta",2400,"#d0675a"],["Shalwar Kameez",4900,"#5b6f4a"],["Casual Tee",1200,"#6d7a86"],["Silk Kurti",5200,"#a23c5e"],["Wool Shawl",3900,"#7b5b3a"],["Formal Shirt",2800,"#2d4f6b"],["Hoodie",3400,"#4a4f7a"],["Linen Kurta",3600,"#3a7a8a"],["Khaddar Kurta",3300,"#9a6a2a"]];
+var SZ=[["M","L"],["S","M","L","XL"],["M","XL"]];
+function sizes(i){return SZ[i%3]}
+var S;
+function shirt(c){return '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22 8 8 16l6 12 6-3v31h24V25l6 3 6-12-14-8c-2 5-6 7-10 7s-8-2-10-7z" fill="'+c+'"/></svg>'}
+function tile(i){return '<div class="tile" style="background:'+P[i][2]+'22">'+shirt(P[i][2])+'</div>'}
+function rs(n){return 'Rs '+n.toLocaleString('en-US')}
+function $(i){return document.getElementById(i)}
+function reset(){S={scr:'home',pid:0,size:null,cart:null,off:false,msg:'',cls:'',pay:'cod',qs:'',fs:null,busy:false};render()}
+function go(s){S.scr=s;render()}
+function open_(i){S.pid=i;S.size=null;S.scr='detail';render()}
+function pick(z){S.size=z;render()}
+function add(){S.cart={pid:S.pid,size:S.size,qty:1};S.off=false;S.msg='';S.scr='cart';render();toast('Added to cart')}
+function q(d){var c=S.cart;c.qty=Math.max(1,Math.min(10,c.qty+d));render();$('tot').classList.add('bump')}
+function toast(m){var e=$('toast');e.textContent=m;e.classList.add('show');setTimeout(function(){e.classList.remove('show')},1600)}
+function grid(){
+  var h='',n=0;
+  P.forEach(function(p,i){
+    if(S.qs&&p[0].toLowerCase().indexOf(S.qs.toLowerCase())<0)return;
+    if(S.fs&&sizes(i).indexOf(S.fs)<0)return;
+    n++;h+='<button class="item" onclick="open_('+i+')">'+tile(i)+'<b>'+p[0]+'</b><span>'+rs(p[1])+'</span></button>';
+  });
+  $('g').innerHTML=n?h:'<div class="none">No products match. Try a different word or size.</div>';
+}
+function search(v){S.qs=v;grid()}
+function fsz(z){S.fs=S.fs===z?null:z;render()}
+function apply(){
+  var v=$('cp').value.trim().toUpperCase();
+  S.off=false;
+  if(v==='STYLISH20'){S.off=true;S.msg='Coupon applied: 20% off.';S.cls='good'}
+  else if(v==='OLD10'){S.msg='This code has expired.';S.cls='bad'}
+  else if(!v){S.msg='Enter a coupon code.';S.cls='bad'}
+  else{S.msg='This code is not valid.';S.cls='bad'}
+  render();$('tot').classList.add('bump');
+}
+function amounts(){var c=S.cart,sub=P[c.pid][1]*c.qty,d=S.off?Math.round(sub*0.2):0;return{sub:sub,d:d,tot:sub-d}}
+function method(m){S.pay=m;render()}
+function place(){
+  if(S.pay==='jazz'){S.busy=true;render();setTimeout(function(){S.busy=false;S.scr='done';render()},1200)}
+  else{S.scr='done';render()}
+}
+function render(){
+  var top=$('top'),m=$('main'),h='';
+  $('nh').className=S.scr==='home'?'on':'';$('nc').className=(S.scr==='cart'||S.scr==='pay')?'on':'';
+  var n=S.cart?S.cart.qty:0;$('bd').hidden=!n;$('bd').textContent=n;
+  if(S.scr==='home'){
+    top.innerHTML='<div class="logo">Stylish</div>';
+    h='<input class="search" id="sq" type="search" placeholder="Search products" aria-label="Search products" value="'+S.qs.replace(/"/g,'')+'" oninput="search(this.value)"><div class="chips"><span>Size</span>';
+    ['S','M','L','XL'].forEach(function(z){h+='<button class="chip'+(S.fs===z?' on':'')+'" onclick="fsz(\''+z+'\')">'+z+'</button>'});
+    m.innerHTML=h+'</div><div class="grid" id="g"></div>';grid();
+  }else if(S.scr==='detail'){
+    var p=P[S.pid];
+    top.innerHTML='<button class="back" onclick="go(\'home\')" aria-label="Back">&larr;</button><h2>Product details</h2>';
+    h='<div class="hero" style="background:'+p[2]+'22">'+shirt(p[2])+'</div><div class="info"><h1>'+p[0]+'</h1><div class="price">'+rs(p[1])+'</div><div class="lbl">Size</div><div class="sizes">';
+    sizes(S.pid).forEach(function(z){h+='<button class="sz'+(S.size===z?' on':'')+'" onclick="pick(\''+z+'\')">'+z+'</button>'});
+    m.innerHTML=h+'</div><button class="btn" onclick="add()"'+(S.size?'':' disabled')+'>Add to cart</button><div class="hint">'+(S.size?'':'Choose a size to continue')+'</div></div>';
+  }else if(S.scr==='cart'){
+    top.innerHTML='<h2>Your cart</h2>';
+    if(!S.cart){m.innerHTML='<div class="empty">Your cart is empty.<br>Find a product on the Home tab.</div>';return}
+    var c=S.cart,pp=P[c.pid],a=amounts();
+    m.innerHTML='<div class="row">'+tile(c.pid)+'<div><h3>'+pp[0]+'</h3><small>Size '+c.size+' &middot; '+rs(pp[1])+' each</small><div class="qty"><button onclick="q(-1)" aria-label="Decrease quantity">&minus;</button><output>'+c.qty+'</output><button onclick="q(1)" aria-label="Increase quantity">+</button></div></div></div>'
+    +'<div class="cp"><div><input id="cp" placeholder="Coupon code" aria-label="Coupon code"><button onclick="apply()">Apply</button></div><div class="msg '+S.cls+'" style="display:block">'+S.msg+'</div></div>'
+    +'<div class="sum"><div><span>Subtotal</span><span>'+rs(a.sub)+'</span></div>'+(S.off?'<div class="off"><span>Coupon STYLISH20</span><span>&minus; '+rs(a.d)+'</span></div>':'')+'<div class="tot"><span>Total</span><span id="tot">'+rs(a.tot)+'</span></div><button class="btn" onclick="go(\'pay\')">Checkout</button></div>';
+  }else if(S.scr==='pay'){
+    var b=amounts();
+    top.innerHTML='<button class="back" onclick="go(\'cart\')" aria-label="Back">&larr;</button><h2>Checkout</h2>';
+    m.innerHTML='<div class="info" style="padding-top:16px"><div class="lbl" style="margin-top:0">Payment method</div>'
+    +'<button class="pay'+(S.pay==='cod'?' on':'')+'" onclick="method(\'cod\')"><i></i><span>Cash on Delivery<small>Pay when your order arrives</small></span></button>'
+    +'<button class="pay'+(S.pay==='jazz'?' on':'')+'" onclick="method(\'jazz\')"><i></i><span>JazzCash<small>Test mode</small></span></button>'
+    +'<div class="sum" style="padding:20px 0 0"><div class="tot"><span>Total</span><span>'+rs(b.tot)+'</span></div></div>'
+    +'<button class="btn" onclick="place()"'+(S.busy?' disabled':'')+'>'+(S.busy?'Confirming payment...':'Place order')+'</button></div>';
+  }else{
+    var d=amounts();
+    top.innerHTML='<div class="logo">Stylish</div>';
+    m.innerHTML='<div class="done"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="28"/><path d="M20 33l9 9 16-18"/></svg><h1>Order placed</h1><p>Order STY-2041</p><p>'+(S.pay==='jazz'?'Paid with JazzCash: '+rs(d.tot):'Pay '+rs(d.tot)+' on delivery')+'</p><button class="btn" onclick="S.cart=null;S.off=false;S.msg=\'\';go(\'home\')">Continue shopping</button></div>';
+  }
+}
+reset();
+</script>
+</body>
+</html>
